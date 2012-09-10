@@ -120,7 +120,7 @@
       html.push('<tbody>');
       $.each(data, function (idx, eventData) {
         html.push('<tr>');
-        html.push('<td>' + eventData.city + '</td>');
+        html.push('<td>' + eventDisplayTitle(eventData) + '</td>');
         html.push('<td>' + eventData.start_date + '</td>');
         html.push('<td>' + eventData.website + '</td>');
         html.push('</tr>');
