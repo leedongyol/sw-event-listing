@@ -2,11 +2,32 @@
 
 (function ($) {
   // Functions and top-level declarations
-  var testHarness, buildQueryUrl;
+  var testHarness, objLen, buildQueryUrl;
 
   if (window.testHarness) {
     testHarness = window.testHarness;
   }
+
+  /**
+   * Returns the length of the keys of a given object
+   *
+   * @object - The object to determine the length
+   */
+  objLen = function (object) {
+    var key, length = 0;
+
+    if (object === null || typeof object === 'undefined') {
+      return length;
+    } else if (object.length && typeof object.length === "number") {
+      return object.length;
+    } else {
+      for (key in object) {
+        if (object.hasOwnProperty(key)) { length += 1; }
+      }
+      return length;
+    }
+  };
+  testHarness.objLen = objLen;
 
   /**
    * Build a URL with the query parameters added as
