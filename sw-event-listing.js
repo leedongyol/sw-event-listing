@@ -2,7 +2,8 @@
 
 (function ($, moment) {
   // Functions and top-level declarations
-  var testHarness, objLen, buildQueryUrl, eventDisplayTitle, processEventData;
+  var testHarness, objLen, buildQueryUrl, eventDisplayTitle, 
+      formatStartDate, processEventData;
 
   if (window.testHarness) {
     testHarness = window.testHarness;
@@ -105,6 +106,38 @@
   };
   testHarness.eventDisplayTitle = eventDisplayTitle;
 
+  formatStartDate = function (eventData) {
+    var dateType = false,
+        stringType = false,
+        workingDate;
+
+    if (eventData === null || typeof eventData === 'undefined' || objLen(eventData) === 0) {
+      return '';
+    } else if (!(eventData.start_date) || eventData.start_date === null || typeof eventData.start_date === 'undefined') {
+      return '';
+    } else {
+      // Make sure we are working with a date or a parseable string object
+      dateType = eventData.start_date.constructor.toString().match(/Date/);
+      stringType = typeof eventData.start_date === 'string';
+
+      if (dateType || stringType) {
+        if (stringType) {
+          workingDate = moment(eventData.start_date); 
+
+          // Bad date format or not even a date?
+          if (workingDate._d.toString() === 'Invalid Date') { return ''; }
+        } else {
+          workingDate = moment(eventData.start_date);
+        }
+
+        return workingDate.utc().format('MMM D, YYYY');
+      } else {
+        return '';
+      }
+    }
+  };
+  testHarness.formatStartDate = formatStartDate;
+
   /**
    * Takes an array of JSON data and returns the HTML
    * for a table containing the event listing
@@ -150,4 +183,4 @@
 
     settings = $.extend(defaults, opts);
   };
-})(jQuery, moment);
+}(jQuery, moment));
