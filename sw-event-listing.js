@@ -4,7 +4,7 @@
   // Functions and top-level declarations
   var testHarness, objLen, buildQueryUrl, isEmptyEvent,
       eventDisplayTitle, formatStartDate, generateEventLink,
-      processEventData;
+      processEventData, dataFromServer;
 
   if (window.testHarness) {
     testHarness = window.testHarness;
@@ -234,6 +234,7 @@
       success: function (data) {
         var tableHtml;
 
+        dataFromServer = data;
         tableHtml = processEventData(data);
 
         $(domElement).html(tableHtml);
