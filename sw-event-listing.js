@@ -52,7 +52,7 @@
       return copy;
     }
   };
-  testHarness.sortEvents = sortEvents;
+  if (testHarness) { testHarness.sortEvents = sortEvents; }
 
   /**
    * Returns the length of the keys of a given object
@@ -73,7 +73,7 @@
       return length;
     }
   };
-  testHarness.objLen = objLen;
+  if (testHarness) { testHarness.objLen = objLen; }
 
   /**
    * Build a URL with the query parameters added as
@@ -104,7 +104,7 @@
       return baseUrl;
     };
   };
-  testHarness.buildQueryUrl = buildQueryUrl;
+  if (testHarness) { testHarness.buildQueryUrl = buildQueryUrl; }
 
   /*
    * Given an event object, return true if the
@@ -120,7 +120,7 @@
       return false;
     }
   };
-  testHarness.isEmptyEvent = isEmptyEvent;
+  if (testHarness) { testHarness.isEmptyEvent = isEmptyEvent; }
 
   /**
    * Given a JSON event object, build a display title
@@ -165,7 +165,7 @@
       return titleTerms.join(', ');
     }
   };
-  testHarness.eventDisplayTitle = eventDisplayTitle;
+  if (testHarness) { testHarness.eventDisplayTitle = eventDisplayTitle; }
 
   formatStartDate = function (eventData) {
     var dateType = false,
@@ -197,7 +197,7 @@
       }
     }
   };
-  testHarness.formatStartDate = formatStartDate;
+  if (testHarness) { testHarness.formatStartDate = formatStartDate; }
 
   /*
    * Given an event, return a link to the registration site
@@ -221,7 +221,7 @@
       }
     }
   };
-  testHarness.generateEventLink = generateEventLink;
+  if (testHarness) { testHarness.generateEventLink = generateEventLink; }
 
   /**
    * Takes an array of JSON data and returns the HTML
@@ -262,7 +262,7 @@
     }
     return html.join('');
   };
-  testHarness.processEventData = processEventData;
+  if (testHarness) { testHarness.processEventData = processEventData; }
 
   /**
    * This plugin generates an html table based on data points
