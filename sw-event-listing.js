@@ -38,8 +38,22 @@
    * @query - An object holding key-value pairs representing the API query
    */
   buildQueryUrl = function (baseUrl, query) {
-    if (query) {
-      return '';
+    var prop, queryTerms = [];
+
+    if (baseUrl === null || typeof baseUrl === 'undefined' || baseUrl.length === 0) { return ''; };
+    
+    if (baseUrl[baseUrl.length - 1] === '/') {
+      baseUrl = baseUrl.slice(0, -1);
+    }
+
+    if (objLen(query) > 0) {
+      for (prop in query) {
+        if (query.hasOwnProperty(prop)) {
+          queryTerms.push(prop + "=" + query[prop]);
+        }
+      }
+
+      return baseUrl + "?" + queryTerms.join("&");
     } else {
       return baseUrl;
     };
