@@ -155,6 +155,30 @@
   };
   testHarness.formatStartDate = formatStartDate;
 
+  /*
+   * Given an event, return a link to the registration site
+   * if the event is ready for registration, or present a
+   * "Coming Soon" message otherwise
+   */
+  generateEventLink = function (eventData) {
+    var emptyLink, acceptableState, actualUrl, comingSoonLink = '<a href="#" class="comingSoon">Coming soon</a>';
+
+    if (isEmptyEvent(eventData)) {
+      return '';
+    } else {
+      emptyLink = (typeof eventData.website === 'undefined' || eventData.website === null || eventData.website.length === 0);
+      acceptableState = (eventData.event_status && (eventData.event_status === 'W' || eventData.event_status === 'G'));
+
+      if (emptyLink === false && acceptableState) {
+        actualUrl = eventData.website.indexOf('http') < 0  ? 'http://' + eventData.website : eventData.website;
+        return '<a href="' + actualUrl + '" target="_blank" class="registerLink">Register</a>';
+      } else {
+        return comingSoonLink;
+      }
+    }
+  };
+  testHarness.generateEventLink = generateEventLink;
+
   /**
    * Takes an array of JSON data and returns the HTML
    * for a table containing the event listing

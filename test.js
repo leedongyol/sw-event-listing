@@ -227,6 +227,65 @@ test('returns a formatted date when the start_date is a date', function () {
   equal(testHarness.formatStartDate(eventData), 'Jan 1, 2011');
 });
 
+module('generateEventLink');
+test('returns an empty string for no argument', function () {
+  equal(testHarness.generateEventLink(), '');
+});
+
+test('returns an empty string for null argument', function () {
+  equal(testHarness.generateEventLink(null), '');
+});
+
+test('returns an empty string for an empty event', function () {
+  equal(testHarness.generateEventLink({}), '');
+});
+
+test('returns a coming soon link for an event with no website', function () {
+  var expected, eventData = {
+    city: 'Seattle'
+  };
+
+  expected = '<a href="#" class="comingSoon">Coming soon</a>';
+
+  equal(testHarness.generateEventLink(eventData), expected);
+});
+
+test('returns a coming soon link for an event with a website but no acceptable state', function () {
+  var expected, eventData = {
+    city: 'Seattle',
+    website: 'http://seattle.startupweekend.org',
+    event_status: 'T'
+  };
+
+  expected = '<a href="#" class="comingSoon">Coming soon</a>';
+
+  equal(testHarness.generateEventLink(eventData), expected);
+});
+
+test('returns a Register link for an event with a website and an acceptable state', function () {
+  var expected, eventData = {
+    city: 'Seattle',
+    website: 'http://seattle.startupweekend.org',
+    event_status: 'G'
+  };
+
+  expected = '<a href="http://seattle.startupweekend.org" target="_blank" class="registerLink">Register</a>';
+
+  equal(testHarness.generateEventLink(eventData), expected);
+});
+
+test('automatically adds protocol if not included in website field', function () {
+  var expected, eventData = {
+    city: 'Seattle',
+    website: 'seattle.startupweekend.org',
+    event_status: 'G'
+  };
+
+  expected = '<a href="http://seattle.startupweekend.org" target="_blank" class="registerLink">Register</a>';
+
+  equal(testHarness.generateEventLink(eventData), expected);
+});
+
 module('processEventData');
 test('returns an empty table with the headers when no data passed', function () {
   var emptyTable, result;
