@@ -17,7 +17,11 @@
    * @query - An object holding key-value pairs representing the API query
    */
   buildQueryUrl = function (baseUrl, query) {
-    return baseUrl;
+    if (query) {
+      return '';
+    } else {
+      return baseUrl;
+    };
   };
   testHarness.buildQueryUrl = buildQueryUrl;
 
