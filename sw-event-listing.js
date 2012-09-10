@@ -1,6 +1,6 @@
 "use strict";
 
-(function ($) {
+(function ($, moment) {
   // Functions and top-level declarations
   var testHarness, objLen, buildQueryUrl, eventDisplayTitle, processEventData;
 
@@ -150,4 +150,4 @@
 
     settings = $.extend(defaults, opts);
   };
-})(jQuery);
+})(jQuery, moment);
