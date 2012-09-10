@@ -69,6 +69,90 @@ test('handles the case where there is a trailing slash', function () {
   equal(result, 'http://baseurl?vertical=EDU&since=2011-01-01');
 });
 
+module('eventDisplayTitle');
+
+test('returns an empty string if nothing is passed', function () {
+  var result = testHarness.eventDisplayTitle();
+  equal(result, '');
+});
+
+test('returns an empty string if null is passed', function () {
+  var result = testHarness.eventDisplayTitle(null);
+  equal(result, '');
+});
+
+test('returns an empty string if no title fields are present', function () {
+  var result, eventData = {
+    anything: 'but',
+    what: 'we',
+    need: 'for real'
+  };
+
+  result = testHarness.eventDisplayTitle(eventData);
+  equal(result, '');
+});
+
+test('returns event title with nickname if present', function () {
+  var result, eventData = {
+    nickname: 'Airport'
+  };
+
+  result = testHarness.eventDisplayTitle(eventData);
+  equal(result, 'Startup Weekend Airport');
+});
+
+test('returns event title with vertical if present', function () {
+  var result, eventData = {
+    vertical: 'EDU'
+  };
+
+  result = testHarness.eventDisplayTitle(eventData);
+  equal(result, 'Startup Weekend - EDU');
+});
+
+test('returns an event title with nickname and vertical combined if both present', function () {
+  var result, eventData = {
+    nickname: 'Airport',
+    vertical: 'EDU'
+  };
+
+  result = testHarness.eventDisplayTitle(eventData);
+  equal(result, 'Startup Weekend Airport - EDU');
+});
+
+test('returns an event title with only the city if it is the only thing present', function () {
+  var result, eventData = {
+    city: 'Berlin'
+  };
+
+  result = testHarness.eventDisplayTitle(eventData);
+  equal(result, 'Berlin');
+});
+
+test('returns an event title with all location data available', function () {
+  var result, eventData = {
+    city: 'Seattle',
+    state: 'WA',
+    country: 'USA'
+  };
+
+  result = testHarness.eventDisplayTitle(eventData);
+  equal(result, 'Seattle, WA, USA');
+});
+
+test('returns a full event title string if all data is present', function () {
+  var result, eventData = {
+    city: 'Seattle',
+    state: 'WA',
+    country: 'USA',
+    vertical: 'EDU',
+    nickname: 'Mega'
+  };
+
+  result = testHarness.eventDisplayTitle(eventData);
+  equal(result, 'Startup Weekend Mega - EDU, Seattle, WA, USA');
+});
+
 module('processEventData');
 test('returns an empty table with the headers when no data passed', function () {
   var emptyTable, result;

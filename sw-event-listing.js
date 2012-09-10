@@ -2,7 +2,7 @@
 
 (function ($) {
   // Functions and top-level declarations
-  var testHarness, objLen, buildQueryUrl, processEventData;
+  var testHarness, objLen, buildQueryUrl, eventDisplayTitle, processEventData;
 
   if (window.testHarness) {
     testHarness = window.testHarness;
@@ -59,6 +59,51 @@
     };
   };
   testHarness.buildQueryUrl = buildQueryUrl;
+
+  /**
+   * Given a JSON event object, build a display title
+   * based on all the available location data 
+   * (nickname, vertical, city, state, country)
+   *
+   * @eventData - The JSON object containing the data
+   *
+   */
+  eventDisplayTitle = function (eventData) {
+    var nickAndVertical, hasNick, hasVertical, titleTerms = [];
+
+    if (eventData === null || typeof eventData === 'undefined' || objLen(eventData) === 0) {
+      return '';
+    } else {
+
+      // Walk through all the nickname and vertical logic
+      if (eventData.nickname && eventData.nickname.length > 0) { hasNick = true; }
+      if (eventData.vertical && eventData.vertical.length > 0) { hasVertical = true; }
+      if (hasNick || hasVertical) {
+        nickAndVertical = "Startup Weekend";
+
+        if (hasNick) { nickAndVertical += (" " + eventData.nickname); }
+        if (hasVertical) { nickAndVertical += (" - " + eventData.vertical); }
+
+        titleTerms.push(nickAndVertical);
+      }
+
+      // Work through city/state/country logic
+      if (eventData.city && eventData.city.length > 0) {
+        titleTerms.push(eventData.city);
+      }
+
+      if (eventData.state && eventData.state.length > 0) {
+        titleTerms.push(eventData.state);
+      }
+
+      if (eventData.country && eventData.country.length > 0) {
+        titleTerms.push(eventData.country);
+      }
+
+      return titleTerms.join(', ');
+    }
+  };
+  testHarness.eventDisplayTitle = eventDisplayTitle;
 
   /**
    * Takes an array of JSON data and returns the HTML
