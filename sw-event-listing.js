@@ -89,7 +89,7 @@
   eventDisplayTitle = function (eventData) {
     var nickAndVertical, hasNick, hasVertical, titleTerms = [];
 
-    if (eventData === null || typeof eventData === 'undefined' || objLen(eventData) === 0) {
+    if (isEmptyEvent(eventData)) {
       return '';
     } else {
 
@@ -128,7 +128,7 @@
         stringType = false,
         workingDate;
 
-    if (eventData === null || typeof eventData === 'undefined' || objLen(eventData) === 0) {
+    if (isEmptyEvent(eventData)) {
       return '';
     } else if (!(eventData.start_date) || eventData.start_date === null || typeof eventData.start_date === 'undefined') {
       return '';
