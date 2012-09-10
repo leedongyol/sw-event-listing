@@ -2,13 +2,57 @@
 
 (function ($, moment) {
   // Functions and top-level declarations
-  var testHarness, objLen, buildQueryUrl, isEmptyEvent,
+  var sortEvents,
+      testHarness, objLen, buildQueryUrl, isEmptyEvent,
       eventDisplayTitle, formatStartDate, generateEventLink,
       processEventData, dataFromServer;
 
   if (window.testHarness) {
     testHarness = window.testHarness;
   }
+
+  /**
+   * A non-destructive on the event list
+   *
+   * @events - The event list to sort
+   * @sortAttribute - A function to grab the sorting attribute from the event
+   * @direction - Either 1 for ascending or -1 for descending
+   */
+  sortEvents = function (events, sortAttribute, direction) {
+    var comparator, attr, copy = events.slice(0);
+
+    // Default sort ascending
+    direction = direction || 1;
+
+    // Default sort by city
+    sortAttribute = sortAttribute || function (event) { return event.city; };
+    if (typeof sortAttribute !== 'function') {
+      attr = sortAttribute;
+      sortAttribute = function (event) { return event[attr]; }
+    }
+
+    comparator = function (eventA, eventB) {
+      var leftVal, rightVal;
+      leftVal = sortAttribute(eventA);
+      rightVal = sortAttribute(eventB);
+
+      if (leftVal < rightVal) {
+        return -1 * direction;
+      } else if (leftVal > rightVal) {
+        return 1 * direction;
+      } else {
+        return 0;
+      }
+    };
+
+    if (copy.sort) {
+      return copy.sort(comparator);
+    } else {
+      // No native sort. Return the original unsorted copy
+      return copy;
+    }
+  };
+  testHarness.sortEvents = sortEvents;
 
   /**
    * Returns the length of the keys of a given object

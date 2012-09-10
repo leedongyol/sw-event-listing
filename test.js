@@ -1,5 +1,80 @@
 var testHarness = window.testHarness || {};
 
+var sortingList = [
+  {
+    start_date: new Date(2012, 8, 15),
+    city: 'Seattle'
+  },
+  {
+    start_date: new Date(2012, 10, 19),
+    city: 'Omaha'
+  }
+];
+
+module('sortEvents');
+test('sorts the events by city ascending', function () {
+  var result, sortedCities;
+
+  result = testHarness.sortEvents(sortingList, function (event) { return event.city; }, 1);
+  sortedCities = $.map(result, function (value, index) { return value.city; });
+
+  deepEqual(sortedCities, ['Omaha', 'Seattle']);
+});
+
+test('sorts the events by city descending', function () {
+  var result, sortedCities;
+
+  result = testHarness.sortEvents(sortingList, function (event) { return event.city; }, -1);
+  sortedCities = $.map(result, function (value, index) { return value.city; });
+
+  deepEqual(sortedCities, ['Seattle', 'Omaha']);
+});
+
+test('sorts by city ascending by default', function () {
+  var result, sortedCities;
+
+  result = testHarness.sortEvents(sortingList);
+  sortedCities = $.map(result, function (value, index) { return value.city; });
+
+  deepEqual(sortedCities, ['Omaha', 'Seattle']);
+});
+
+test('sorts by ascending by default if direction not passed', function () {
+  var result, sortedCities;
+
+  result = testHarness.sortEvents(sortingList, function (event) { return event.city; });
+  sortedCities = $.map(result, function (value, index) { return value.city; });
+
+  deepEqual(sortedCities, ['Omaha', 'Seattle']);
+});
+
+test('turns sorting attribute into a function if a string is passed', function () {
+  var result, sortedCities;
+
+  result = testHarness.sortEvents(sortingList, 'city');
+  sortedCities = $.map(result, function (value, index) { return value.city; });
+
+  deepEqual(sortedCities, ['Omaha', 'Seattle']);
+});
+
+test('sorts by start_date ascending', function () {
+  var result, sortedCities;
+
+  result = testHarness.sortEvents(sortingList, function (event) { return event.start_date; });
+  sortedCities = $.map(result, function (value, index) { return value.city; });
+
+  deepEqual(sortedCities, ['Seattle', 'Omaha']);
+});
+
+test('sorts by start_date descending', function () {
+  var result, sortedCities;
+
+  result = testHarness.sortEvents(sortingList, function (event) { return event.start_date; }, -1);
+  sortedCities = $.map(result, function (value, index) { return value.city; });
+
+  deepEqual(sortedCities, ['Omaha', 'Seattle']);
+});
+
 module('objLen');
 test('returns 0 when no parameters passed', function () {
   var result = testHarness.objLen();
