@@ -229,13 +229,21 @@
    *
    * @data - The JSON array of event data
    */
-  processEventData = function (data) {
+  processEventData = function (data, includeTableDefinition) {
+    includeTableDefinition = (typeof includeTableDefinition === 'undefined') ? true : includeTableDefinition;
+
     var html = [];
-    html.push('<table class="eventListingTable">');
-    html.push('<thead><tr><th>A-Z \u25be</th><th>Date \u25be</th><th>&nbsp;</th></tr></thead>');
+
+    if (includeTableDefinition) {
+      html.push('<table class="eventListingTable">');
+      html.push('<thead><tr><th data-sortattr="city">A-Z \u25be</th><th data-sortattr="start_date">Date \u25be</th><th>&nbsp;</th></tr></thead>');
+    }
 
     if (data && typeof data !== 'undefined' && objLen(data) > 0) {
-      html.push('<tbody>');
+      if (includeTableDefinition) {
+        html.push('<tbody>');
+      }
+
       $.each(data, function (idx, eventData) {
         html.push('<tr>');
         html.push('<td>' + eventDisplayTitle(eventData) + '</td>');
@@ -244,10 +252,14 @@
         html.push('</tr>');
       });
 
-      html.push('</tbody>');
+      if (includeTableDefinition) {
+        html.push('</tbody>');
+      }
     }
 
-    html.push('</table>');
+    if (includeTableDefinition) {
+      html.push('</table>');
+    }
     return html.join('');
   };
   testHarness.processEventData = processEventData;
@@ -282,6 +294,20 @@
         tableHtml = processEventData(data);
 
         $(domElement).html(tableHtml);
+
+        $(domElement).find('th').click(function (evt) {
+          var clickedHeader, sortAttr, sortedEvents, newHtml;
+          
+          clickedHeader = $(evt.currentTarget);
+          sortAttr = clickedHeader.data('sortattr');
+
+          sortedEvents = sortEvents(dataFromServer, sortAttr, 1);
+          newHtml = processEventData(sortedEvents, false);
+          $(domElement).find('tbody').not('thead').html(newHtml);
+
+          evt.preventDefault();
+          return false;
+        });
       }
     });
   };
