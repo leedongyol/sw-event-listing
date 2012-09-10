@@ -77,3 +77,31 @@ test('returns an empty table with the headers when no data passed', function () 
   result = testHarness.processEventData([]);
   equal(result, emptyTable); 
 });
+
+test('returns an empty table with the headers when null is passed', function () {
+  var emptyTable, result;
+  emptyTable = '<table><thead><tr><th>A-Z</th><th>Date</th><th>&nbsp;</th></tr></thead></table>';
+
+  result = testHarness.processEventData([]);
+  equal(result, emptyTable); 
+});
+
+test('returns some HTML when one event is passed', function () {
+  var expected, result, eventList;
+
+  eventList = [{
+    city: 'Seattle',
+    state: 'WA',
+    country: 'USA',
+    start_date: new Date(),
+    website: 'http://seattle.startupweekend.org'
+  }];
+
+  result = testHarness.processEventData(eventList);
+
+  expected = "<table><thead><tr><th>A-Z</th><th>Date</th><th>&nbsp;</th></tr></thead><tbody>" +
+    "<tr><td>Seattle, WA, USA</td><td>Sep 10, 2012</td><td><a href='http://seattle.startupweekend.org'>http://seattle.startupweekend.org</a></td></tr>" +
+    "</tbody></table>";
+
+  equal(result, expected); 
+});

@@ -70,8 +70,21 @@
     var html = [];
     html.push('<table>');
     html.push('<thead><tr><th>A-Z</th><th>Date</th><th>&nbsp;</th></tr></thead>');
-    html.push('</table>');
 
+    if (data && typeof data !== 'undefined' && objLen(data) > 0) {
+      html.push('<tbody>');
+      $.each(data, function (idx, eventData) {
+        html.push('<tr>');
+        html.push('<td>' + eventData.city + '</td>');
+        html.push('<td>' + eventData.start_date + '</td>');
+        html.push('<td>' + eventData.website + '</td>');
+        html.push('</tr>');
+      });
+
+      html.push('</tbody>');
+    }
+
+    html.push('</table>');
     return html.join('');
   };
   testHarness.processEventData = processEventData;
