@@ -2,8 +2,9 @@
 
 (function ($, moment) {
   // Functions and top-level declarations
-  var testHarness, objLen, buildQueryUrl, eventDisplayTitle, 
-      formatStartDate, processEventData;
+  var testHarness, objLen, buildQueryUrl, isEmptyEvent,
+      eventDisplayTitle, formatStartDate, generateEventLink,
+      processEventData;
 
   if (window.testHarness) {
     testHarness = window.testHarness;
@@ -42,7 +43,7 @@
     var prop, queryTerms = [];
 
     if (baseUrl === null || typeof baseUrl === 'undefined' || baseUrl.length === 0) { return ''; };
-    
+
     if (baseUrl[baseUrl.length - 1] === '/') {
       baseUrl = baseUrl.slice(0, -1);
     }
@@ -61,9 +62,25 @@
   };
   testHarness.buildQueryUrl = buildQueryUrl;
 
+  /*
+   * Given an event object, return true if the
+   * event is defined and non-empty, and false
+   * otherwise
+   *
+   * @eventData - A JSON object representing the event
+   */
+  isEmptyEvent = function (eventData) {
+    if (eventData === null || typeof eventData === 'undefined' || objLen(eventData) === 0) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+  testHarness.isEmptyEvent = isEmptyEvent;
+
   /**
    * Given a JSON event object, build a display title
-   * based on all the available location data 
+   * based on all the available location data
    * (nickname, vertical, city, state, country)
    *
    * @eventData - The JSON object containing the data
@@ -122,7 +139,7 @@
 
       if (dateType || stringType) {
         if (stringType) {
-          workingDate = moment(eventData.start_date); 
+          workingDate = moment(eventData.start_date);
 
           // Bad date format or not even a date?
           if (workingDate._d.toString() === 'Invalid Date') { return ''; }

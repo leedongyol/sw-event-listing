@@ -69,8 +69,28 @@ test('handles the case where there is a trailing slash', function () {
   equal(result, 'http://baseurl?vertical=EDU&since=2011-01-01');
 });
 
-module('eventDisplayTitle');
+module('isEmptyEvent');
+test('returns false for no arguments', function () {
+  equal(testHarness.isEmptyEvent(), true);
+});
 
+test('returns false for null', function () {
+  equal(testHarness.isEmptyEvent(null), true);
+});
+
+test('returns false for empty object', function () {
+  equal(testHarness.isEmptyEvent({}), true);
+});
+
+test('returns true for a good event object', function () {
+  var eventData = {
+    city: 'Seattle',
+    start_date: new Date()
+  };
+  equal(testHarness.isEmptyEvent(eventData), false);
+});
+
+module('eventDisplayTitle');
 test('returns an empty string if nothing is passed', function () {
   var result = testHarness.eventDisplayTitle();
   equal(result, '');
