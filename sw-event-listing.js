@@ -14,7 +14,7 @@
    *
    * @opts - The settings for the plugin
    */
-  $.fn.sw-event-listing = function (opts) {
+  $.fn.swEventListing = function (opts) {
     var defaults, settings;
 
     defaults = {
