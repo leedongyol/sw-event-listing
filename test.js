@@ -317,11 +317,26 @@ test('returns some HTML when one event is passed', function () {
 
   result = testHarness.processEventData(eventList);
 
-    "</tbody></table>";
   expected = '<table><thead><tr><th>A-Z</th><th>Date</th><th>&nbsp;</th></tr></thead><tbody>' +
     '<tr><td>Seattle, WA, USA</td><td>Sep 10, 2012</td><td>' +
     '<a href="http://seattle.startupweekend.org" target="_blank" class="registerLink">Register</a></td></tr>' +
     '</tbody></table>';
 
   equal(result, expected);
+});
+
+module('integration');
+asyncTest('writes HTML to target', function () {
+  $('#testTarget').swEventListing({
+    url: 'http://localhost:3000/events',
+    query: {
+      vertical: 'EDU'
+    }
+  });
+
+  setTimeout(function () {
+    ok($('#testTarget').html().length > 0);
+    ok($('#testTarget').html().match(/<table>/));
+    start();
+  }, 1000);
 });

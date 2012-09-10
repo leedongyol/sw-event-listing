@@ -215,7 +215,9 @@
    * @opts - The settings for the plugin
    */
   $.fn.swEventListing = function (opts) {
-    var defaults, settings;
+    var defaults, settings, domElement, apiUrl;
+
+    domElement = this[0];
 
     defaults = {
       url: 'http://swoop.startupweekend.org/events',
@@ -223,5 +225,19 @@
     };
 
     settings = $.extend(defaults, opts);
+
+    apiUrl = buildQueryUrl(settings.url, settings.query);
+
+    $.ajax({
+      dataType: 'jsonp',
+      url: apiUrl,
+      success: function (data) {
+        var tableHtml;
+
+        tableHtml = processEventData(data);
+
+        $(domElement).html(tableHtml);
+      }
+    });
   };
 }(jQuery, moment));
