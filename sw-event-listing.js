@@ -187,7 +187,7 @@
    */
   processEventData = function (data) {
     var html = [];
-    html.push('<table>');
+    html.push('<table class="eventListingTable">');
     html.push('<thead><tr><th>A-Z \u25be</th><th>Date \u25be</th><th>&nbsp;</th></tr></thead>');
 
     if (data && typeof data !== 'undefined' && objLen(data) > 0) {
