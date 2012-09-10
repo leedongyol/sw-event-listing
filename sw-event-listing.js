@@ -294,7 +294,12 @@
         tableHtml = processEventData(data);
 
         $(domElement).html(tableHtml);
+        $(domElement).find('.comingSoon').click(function (evt) {
+          evt.preventDefault();
+          return false;
+        });
 
+        // Table sorting
         $(domElement).find('th').click(function (evt) {
           var clickedHeader, sortAttr, sortDir, sortedEvents, newHtml;
           
@@ -307,6 +312,11 @@
           sortedEvents = sortEvents(dataFromServer, sortAttr, sortDir);
           newHtml = processEventData(sortedEvents, false);
           $(domElement).find('tbody').not('thead').html(newHtml);
+
+          $(domElement).find('.comingSoon').click(function (evt) {
+            evt.preventDefault();
+            return false;
+          });
 
           // Flip the sort direction for that column
           clickedHeader.data('sortdir', sortDir * -1);
