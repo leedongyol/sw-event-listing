@@ -15,5 +15,13 @@
    * @opts - The settings for the plugin
    */
   $.fn.sw-event-listing = function (opts) {
+    var defaults, settings;
+
+    defaults = {
+      url: 'http://swoop.startupweekend.org/events',
+      query: {}
+    };
+
+    settings = $.extend(defaults, opts);
   };
 })(jQuery);
