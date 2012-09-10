@@ -310,15 +310,18 @@ test('returns some HTML when one event is passed', function () {
     city: 'Seattle',
     state: 'WA',
     country: 'USA',
+    event_status: 'G',
     start_date: new Date(),
     website: 'http://seattle.startupweekend.org'
   }];
 
   result = testHarness.processEventData(eventList);
 
-  expected = "<table><thead><tr><th>A-Z</th><th>Date</th><th>&nbsp;</th></tr></thead><tbody>" +
-    "<tr><td>Seattle, WA, USA</td><td>Sep 10, 2012</td><td><a href='http://seattle.startupweekend.org'>http://seattle.startupweekend.org</a></td></tr>" +
     "</tbody></table>";
+  expected = '<table><thead><tr><th>A-Z</th><th>Date</th><th>&nbsp;</th></tr></thead><tbody>' +
+    '<tr><td>Seattle, WA, USA</td><td>Sep 10, 2012</td><td>' +
+    '<a href="http://seattle.startupweekend.org" target="_blank" class="registerLink">Register</a></td></tr>' +
+    '</tbody></table>';
 
   equal(result, expected);
 });

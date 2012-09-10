@@ -196,7 +196,7 @@
         html.push('<tr>');
         html.push('<td>' + eventDisplayTitle(eventData) + '</td>');
         html.push('<td>' + formatStartDate(eventData) + '</td>');
-        html.push('<td>' + eventData.website + '</td>');
+        html.push('<td>' + generateEventLink(eventData) + '</td>');
         html.push('</tr>');
       });
 
