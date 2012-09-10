@@ -2,7 +2,7 @@
 
 (function ($) {
   // Functions and top-level declarations
-  var testHarness, objLen, buildQueryUrl;
+  var testHarness, objLen, buildQueryUrl, processEventData;
 
   if (window.testHarness) {
     testHarness = window.testHarness;
@@ -59,6 +59,22 @@
     };
   };
   testHarness.buildQueryUrl = buildQueryUrl;
+
+  /**
+   * Takes an array of JSON data and returns the HTML
+   * for a table containing the event listing
+   *
+   * @data - The JSON array of event data
+   */
+  processEventData = function (data) {
+    var html = [];
+    html.push('<table>');
+    html.push('<thead><tr><th>A-Z</th><th>Date</th><th>&nbsp;</th></tr></thead>');
+    html.push('</table>');
+
+    return html.join('');
+  };
+  testHarness.processEventData = processEventData;
 
   /**
    * This plugin generates an html table based on data points

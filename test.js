@@ -68,3 +68,12 @@ test('handles the case where there is a trailing slash', function () {
 
   equal(result, 'http://baseurl?vertical=EDU&since=2011-01-01');
 });
+
+module('processEventData');
+test('returns an empty table with the headers when no data passed', function () {
+  var emptyTable, result;
+  emptyTable = '<table><thead><tr><th>A-Z</th><th>Date</th><th>&nbsp;</th></tr></thead></table>';
+
+  result = testHarness.processEventData([]);
+  equal(result, emptyTable); 
+});
