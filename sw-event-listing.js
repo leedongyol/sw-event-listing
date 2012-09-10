@@ -236,7 +236,7 @@
 
     if (includeTableDefinition) {
       html.push('<table class="eventListingTable">');
-      html.push('<thead><tr><th data-sortattr="city">A-Z \u25be</th><th data-sortattr="start_date">Date \u25be</th><th>&nbsp;</th></tr></thead>');
+      html.push('<thead><tr><th data-sortattr="city" data-sortdir="1">A-Z \u25be</th><th data-sortattr="start_date" data-sortdir="1">Date \u25be</th><th>&nbsp;</th></tr></thead>');
     }
 
     if (data && typeof data !== 'undefined' && objLen(data) > 0) {
@@ -296,14 +296,20 @@
         $(domElement).html(tableHtml);
 
         $(domElement).find('th').click(function (evt) {
-          var clickedHeader, sortAttr, sortedEvents, newHtml;
+          var clickedHeader, sortAttr, sortDir, sortedEvents, newHtml;
           
           clickedHeader = $(evt.currentTarget);
           sortAttr = clickedHeader.data('sortattr');
+          sortDir = clickedHeader.data('sortdir');
 
-          sortedEvents = sortEvents(dataFromServer, sortAttr, 1);
+          sortDir = parseInt(sortDir, 10);
+
+          sortedEvents = sortEvents(dataFromServer, sortAttr, sortDir);
           newHtml = processEventData(sortedEvents, false);
           $(domElement).find('tbody').not('thead').html(newHtml);
+
+          // Flip the sort direction for that column
+          clickedHeader.data('sortdir', sortDir * -1);
 
           evt.preventDefault();
           return false;
