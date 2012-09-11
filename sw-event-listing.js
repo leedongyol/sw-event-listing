@@ -236,7 +236,7 @@
 
     if (includeTableDefinition) {
       html.push('<table class="eventListingTable">');
-      html.push('<thead><tr><th data-sortattr="city" data-sortdir="1">A-Z \u25be</th><th data-sortattr="start_date" data-sortdir="1">Date \u25be</th><th>&nbsp;</th></tr></thead>');
+      html.push('<thead><tr><th data-sortattr="city" data-sortdir="1">A - Z \u25be</th><th data-sortattr="start_date" data-sortdir="1">Date \u25be</th><th>&nbsp;</th></tr></thead>');
     }
 
     if (data && typeof data !== 'undefined' && objLen(data) > 0) {
