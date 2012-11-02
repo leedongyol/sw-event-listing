@@ -261,7 +261,12 @@
 
       $.each(data, function (idx, eventData) {
         html.push('<tr>');
-        html.push('<td>' + eventDisplayTitle(eventData) + '</td>');
+        html.push('<td>' +
+          '<a target="_blank" href="' +
+          generateEventUrl(eventData) +
+          '">' +
+          eventDisplayTitle(eventData) + '</a></td>');
+
         html.push('<td>' + formatStartDate(eventData) + '</td>');
         html.push('<td>' + generateEventLink(eventData) + '</td>');
         html.push('</tr>');

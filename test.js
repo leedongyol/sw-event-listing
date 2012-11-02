@@ -437,7 +437,7 @@ test('returns some HTML when one event is passed', function () {
   result = testHarness.processEventData(eventList);
 
   expected = '<table class="eventListingTable"><thead><tr><th data-sortattr="city" data-sortdir="1">A - Z \u25be</th><th data-sortattr="start_date" data-sortdir="1">Date \u25be</th><th>&nbsp;</th></tr></thead><tbody>' +
-    '<tr><td>Seattle, WA, USA</td><td>Nov 2, 2012</td><td>' +
+    '<tr><td><a target="_blank" href="http://seattle.startupweekend.org">Seattle, WA, USA</a></td><td>Nov 2, 2012</td><td>' +
     '<a href="http://seattle.startupweekend.org" target="_blank" class="registerLink">Register</a></td></tr>' +
     '</tbody></table>';
 
