@@ -4,7 +4,7 @@
   // Functions and top-level declarations
   var sortEvents,
       testHarness, objLen, buildQueryUrl, isEmptyEvent,
-      eventDisplayTitle, formatStartDate, generateEventLink,
+      eventDisplayTitle, formatStartDate, generateEventLink, generateEventUrl,
       processEventData, dataFromServer;
 
   if (window.testHarness) {
@@ -198,6 +198,21 @@
     }
   };
   if (testHarness) { testHarness.formatStartDate = formatStartDate; }
+
+  /*
+   * Given an event, return the URL to the city page if it available.
+   * Return an empty string otherwise.
+   */
+  generateEventUrl = function (eventData) {
+    var actualUrl;
+
+    if (isEmptyEvent(eventData) || (typeof eventData.website === 'undefined') || eventData.website === null || eventData.website.length === 0) {
+      return '';
+    } else {
+      return eventData.website.indexOf('http') < 0 ? 'http://' + eventData.website : eventData.website;
+    }
+  };
+  if (testHarness) { testHarness.generateEventUrl = generateEventUrl; }
 
   /*
    * Given an event, return a link to the registration site
