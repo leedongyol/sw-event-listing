@@ -302,6 +302,11 @@ test('returns a formatted date when the start_date is a date', function () {
   equal(testHarness.formatStartDate(eventData), 'Jan 1, 2011');
 });
 
+module('generateEventUrl');
+test('returns an empty string for no argument', function () {
+  equal(testHarness.generateEventUrl(), '');
+});
+
 module('generateEventLink');
 test('returns an empty string for no argument', function () {
   equal(testHarness.generateEventLink(), '');
@@ -364,7 +369,7 @@ test('automatically adds protocol if not included in website field', function ()
 module('processEventData');
 test('returns an empty table with the headers when no data passed', function () {
   var emptyTable, result;
-  emptyTable = '<table class="eventListingTable"><thead><tr><th data-sortattr="city" data-sortdir="1">A-Z \u25be</th><th data-sortattr="start_date" data-sortdir="1">Date \u25be</th><th>&nbsp;</th></tr></thead></table>';
+  emptyTable = '<table class="eventListingTable"><thead><tr><th data-sortattr="city" data-sortdir="1">A - Z \u25be</th><th data-sortattr="start_date" data-sortdir="1">Date \u25be</th><th>&nbsp;</th></tr></thead></table>';
 
   result = testHarness.processEventData([]);
   equal(result, emptyTable);
@@ -372,7 +377,7 @@ test('returns an empty table with the headers when no data passed', function () 
 
 test('returns an empty table with the headers when null is passed', function () {
   var emptyTable, result;
-  emptyTable = '<table class="eventListingTable"><thead><tr><th data-sortattr="city" data-sortdir="1">A-Z \u25be</th><th data-sortattr="start_date" data-sortdir="1">Date \u25be</th><th>&nbsp;</th></tr></thead></table>';
+  emptyTable = '<table class="eventListingTable"><thead><tr><th data-sortattr="city" data-sortdir="1">A - Z \u25be</th><th data-sortattr="start_date" data-sortdir="1">Date \u25be</th><th>&nbsp;</th></tr></thead></table>';
 
   result = testHarness.processEventData([]);
   equal(result, emptyTable);
@@ -392,8 +397,8 @@ test('returns some HTML when one event is passed', function () {
 
   result = testHarness.processEventData(eventList);
 
-  expected = '<table class="eventListingTable"><thead><tr><th data-sortattr="city" data-sortdir="1">A-Z \u25be</th><th data-sortattr="start_date" data-sortdir="1">Date \u25be</th><th>&nbsp;</th></tr></thead><tbody>' +
-    '<tr><td>Seattle, WA, USA</td><td>Sep 10, 2012</td><td>' +
+  expected = '<table class="eventListingTable"><thead><tr><th data-sortattr="city" data-sortdir="1">A - Z \u25be</th><th data-sortattr="start_date" data-sortdir="1">Date \u25be</th><th>&nbsp;</th></tr></thead><tbody>' +
+    '<tr><td>Seattle, WA, USA</td><td>Nov 2, 2012</td><td>' +
     '<a href="http://seattle.startupweekend.org" target="_blank" class="registerLink">Register</a></td></tr>' +
     '</tbody></table>';
 
