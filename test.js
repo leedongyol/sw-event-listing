@@ -307,6 +307,45 @@ test('returns an empty string for no argument', function () {
   equal(testHarness.generateEventUrl(), '');
 });
 
+test('returns an empty string when website is not defined', function () {
+  var eventData = {
+    start_date: new Date(2011, 0, 1)
+  };
+  equal(testHarness.generateEventUrl(eventData), '');
+});
+
+test('returns an empty string when website is null', function () {
+  var eventData = {
+    start_date: new Date(2011, 0, 1),
+    website: null
+  };
+  equal(testHarness.generateEventUrl(eventData), '');
+});
+
+test('returns an empty string when website is blank', function () {
+  var eventData = {
+    start_date: new Date(2011, 0, 1),
+    website: ''
+  };
+  equal(testHarness.generateEventUrl(eventData), '');
+});
+
+test('returns a url with the protocol even when left off', function () {
+  var eventData = {
+    start_date: new Date(2011, 0, 1),
+    website: 'www.startupweekend.org'
+  };
+  equal(testHarness.generateEventUrl(eventData), 'http://www.startupweekend.org');
+});
+
+test('returns a url when the event is just right', function () {
+  var eventData = {
+    start_date: new Date(2011, 0, 1),
+    website: 'http://www.startupweekend.org'
+  };
+  equal(testHarness.generateEventUrl(eventData), 'http://www.startupweekend.org');
+});
+
 module('generateEventLink');
 test('returns an empty string for no argument', function () {
   equal(testHarness.generateEventLink(), '');

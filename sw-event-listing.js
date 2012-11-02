@@ -229,7 +229,7 @@
       acceptableState = (eventData.event_status && (eventData.event_status === 'W' || eventData.event_status === 'G'));
 
       if (emptyLink === false && acceptableState) {
-        actualUrl = eventData.website.indexOf('http') < 0  ? 'http://' + eventData.website : eventData.website;
+        actualUrl = generateEventUrl(eventData);
         return '<a href="' + actualUrl + '" target="_blank" class="registerLink">Register</a>';
       } else {
         return comingSoonLink;
