@@ -8,6 +8,11 @@ var sortingList = [
   {
     start_date: new Date(2012, 10, 19),
     city: 'Omaha'
+  },
+  {
+    start_date: new Date(2013, 6, 7),
+    city: 'Seattle',
+    event_type: 'NEXT'
   }
 ];
 
@@ -18,7 +23,7 @@ test('sorts the events by city ascending', function () {
   result = testHarness.sortEvents(sortingList, function (event) { return event.city; }, 1);
   sortedCities = $.map(result, function (value, index) { return value.city; });
 
-  deepEqual(sortedCities, ['Omaha', 'Seattle']);
+  deepEqual(sortedCities, ['Omaha', 'Seattle', 'Seattle']);
 });
 
 test('sorts the events by city descending', function () {
@@ -27,7 +32,7 @@ test('sorts the events by city descending', function () {
   result = testHarness.sortEvents(sortingList, function (event) { return event.city; }, -1);
   sortedCities = $.map(result, function (value, index) { return value.city; });
 
-  deepEqual(sortedCities, ['Seattle', 'Omaha']);
+  deepEqual(sortedCities, ['Seattle', 'Seattle', 'Omaha']);
 });
 
 test('sorts by city ascending by default', function () {
@@ -36,7 +41,7 @@ test('sorts by city ascending by default', function () {
   result = testHarness.sortEvents(sortingList);
   sortedCities = $.map(result, function (value, index) { return value.city; });
 
-  deepEqual(sortedCities, ['Omaha', 'Seattle']);
+  deepEqual(sortedCities, ['Omaha', 'Seattle', 'Seattle']);
 });
 
 test('sorts by ascending by default if direction not passed', function () {
@@ -45,7 +50,7 @@ test('sorts by ascending by default if direction not passed', function () {
   result = testHarness.sortEvents(sortingList, function (event) { return event.city; });
   sortedCities = $.map(result, function (value, index) { return value.city; });
 
-  deepEqual(sortedCities, ['Omaha', 'Seattle']);
+  deepEqual(sortedCities, ['Omaha', 'Seattle', 'Seattle']);
 });
 
 test('turns sorting attribute into a function if a string is passed', function () {
@@ -54,7 +59,7 @@ test('turns sorting attribute into a function if a string is passed', function (
   result = testHarness.sortEvents(sortingList, 'city');
   sortedCities = $.map(result, function (value, index) { return value.city; });
 
-  deepEqual(sortedCities, ['Omaha', 'Seattle']);
+  deepEqual(sortedCities, ['Omaha', 'Seattle', 'Seattle']);
 });
 
 test('sorts by start_date ascending', function () {
@@ -63,7 +68,7 @@ test('sorts by start_date ascending', function () {
   result = testHarness.sortEvents(sortingList, function (event) { return event.start_date; });
   sortedCities = $.map(result, function (value, index) { return value.city; });
 
-  deepEqual(sortedCities, ['Seattle', 'Omaha']);
+  deepEqual(sortedCities, ['Seattle', 'Omaha', 'Seattle']);
 });
 
 test('sorts by start_date descending', function () {
@@ -72,7 +77,7 @@ test('sorts by start_date descending', function () {
   result = testHarness.sortEvents(sortingList, function (event) { return event.start_date; }, -1);
   sortedCities = $.map(result, function (value, index) { return value.city; });
 
-  deepEqual(sortedCities, ['Omaha', 'Seattle']);
+  deepEqual(sortedCities, ['Seattle', 'Omaha', 'Seattle']);
 });
 
 module('objLen');
@@ -208,11 +213,12 @@ test('returns event title with vertical if present', function () {
 test('returns an event title with nickname and vertical combined if both present', function () {
   var result, eventData = {
     nickname: 'Airport',
-    vertical: 'EDU'
+    vertical: 'EDU',
+    event_type: 'NEXT'
   };
 
   result = testHarness.eventDisplayTitle(eventData);
-  equal(result, 'Startup Weekend Airport - EDU');
+  equal(result, 'NEXT Airport - EDU');
 });
 
 test('returns an event title with only the city if it is the only thing present', function () {
@@ -430,7 +436,7 @@ test('returns some HTML when one event is passed', function () {
     state: 'WA',
     country: 'USA',
     event_status: 'G',
-    start_date: new Date(),
+    start_date: new Date(2012, 10, 2),
     website: 'http://seattle.startupweekend.org'
   }];
 

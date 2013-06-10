@@ -141,7 +141,7 @@
       if (eventData.nickname && eventData.nickname.length > 0) { hasNick = true; }
       if (eventData.vertical && eventData.vertical.length > 0) { hasVertical = true; }
       if (hasNick || hasVertical) {
-        nickAndVertical = "Startup Weekend";
+        nickAndVertical = eventData.event_type || "Startup Weekend";
 
         if (hasNick) { nickAndVertical += (" " + eventData.nickname); }
         if (hasVertical) { nickAndVertical += (" - " + eventData.vertical); }
